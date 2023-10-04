@@ -1,0 +1,55 @@
+spring.kafka.bootstrap-servers: localhost:29092
+spring.output.ansi.enabled: ALWAYS
+management.endpoints.web.exposure.include: "*"
+
+
+spring:
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:29092
+      bindings:
+        orderBuySupplier-out-0:
+          destination: orders.buy
+        orderSellSupplier-out-0:
+          destination: orders.sell
+        orders-in-0:
+          destination: orders.buy
+        orders-in-1:
+          destination: orders.sell
+        transactions-in-0:
+          destination: orders.buy
+        transactions-in-1:
+          destination: orders.sell
+        transactions-out-0:
+          destination: transactions
+        total-in-0:
+          destination: transactions
+        totalPerProduct-in-0:
+          destination: transactions
+        totalPerProduct-in-1:
+          destination: order.sell
+        latestPerProduct-in-0:
+          destination: transactions
+        latestPerProduct-in-1:
+          destination: order.sell
+      streams:
+        binder:
+          functions:
+            orders:
+              applicationId: orders
+            transactions:
+              applicationId: transactions
+            total:
+              applicationId: total
+            totalPerProduct:
+              applicationId: totalPerProduct
+            latestPerProduct:
+              applicationId: latestPerProduct
+    function:
+      definition: orderBuySupplier;orderSellSupplier;orders;transactions;total;totalPerProduct;latestPerProduct
+  kafka:
+    producer:
+        value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+        key-serializer: org.apache.kafka.common.serialization.LongSerializer
