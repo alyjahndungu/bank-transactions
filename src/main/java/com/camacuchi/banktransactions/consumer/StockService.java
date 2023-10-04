@@ -37,6 +37,15 @@ public class StockService {
                 });
     }
 
+//    @Bean
+//    public BiConsumer<KStream<Long, Orders>, KStream<Long, Orders>> orders() {
+//        return (orderBuy, orderSell) -> orderBuy
+//                .merge(orderSell)
+//                .peek((k, v) -> {
+//                    logger.info("New({}): {}", k, v);
+////                    logic.add(v);
+//                });
+//    }
     @Bean
     public BiFunction<KStream<Long, Orders>, KStream<Long, Orders>, KStream<Long, Transaction>> transactions() {
         return (orderBuy, orderSell) -> orderBuy
